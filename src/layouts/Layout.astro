@@ -1,0 +1,63 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Sylvia Sharp Studio - Content & Marketing' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style is:global>
+      :root {
+        --accent: #2563eb;
+        --accent-dark: #1e40af;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        font-family: system-ui, sans-serif;
+        background: #fff;
+        color: #333;
+      }
+
+      body {
+        line-height: 1.6;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav style="padding: 1rem 2rem; background: #f9fafb; border-bottom: 1px solid #e5e7eb;">
+        <a href="/sylviasharpstudio/" style="font-weight: bold; font-size: 1.25rem;">Sylvia Sharp Studio</a>
+      </nav>
+    </header>
+    <main style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+      <slot />
+    </main>
+    <footer style="margin-top: 4rem; padding: 2rem; background: #f9fafb; border-top: 1px solid #e5e7eb; text-align: center; color: #666;">
+      <p>&copy; 2026 Sylvia Sharp Studio. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
