@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="World Clock | Sylvia Sharp Studio">
+  <h1 style="font-size: 2.5rem; margin-bottom: 1rem;">World Clock</h1>
+  
+  <p style="font-size: 1.1rem; line-height: 1.8; color: #555; margin-bottom: 2rem;">
+    View the current time across different time zones around the world.
+  </p>
+
+  <div id="clock-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+  </div>
+
+  <script>
+    const timeZones = [
+      { name: 'New York', zone: 'America/New_York' },
+      { name: 'London', zone: 'Europe/London' },
+      { name: 'Tokyo', zone: 'Asia/Tokyo' },
+      { name: 'Sydney', zone: 'Australia/Sydney' },
+      { name: 'Dubai', zone: 'Asia/Dubai' },
+      { name: 'Singapore', zone: 'Asia/Singapore' },
+      { name: 'Paris', zone: 'Europe/Paris' },
+      { name: 'Los Angeles', zone: 'America/Los_Angeles' },
+    ];
+
+    function formatTime(date) {
+      return date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      });
+    }
+
+    function formatDate(date) {
+      return date.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'short',
+        day: 'numeric',
+      });
+    }
+
+    function updateClocks() {
+      const container = document.getElementById('clock-container');
+      
+      timeZones.forEach(({ name, zone }) => {
+        let clockElement = document.getElementById(`clock-${name}`);
+        
+        if (!clockElement) {
+          clockElement = document.createElement('div');
+          clockElement.id = `clock-${name}`;
+          clockElement.style.cssText = `
+            padding: 1.5rem;
+            border: 2px solid #2563eb;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          `;
+          container.appendChild(clockElement);
+        }
+
+        const date = new Date().toLocaleString('en-US', { timeZone: zone });
+        const timeDate = new Date(date);
+        
+        const time = formatTime(timeDate);
+        const dateStr = formatDate(timeDate);
+
+        clockElement.innerHTML = `
+          <div style="font-size: 1rem; font-weight: 600; color: #666; margin-bottom: 0.5rem;">
+            ${name}
+          </div>
+          <div style="font-size: 2.5rem; font-weight: bold; color: #2563eb; font-family: 'Courier New', monospace; margin-bottom: 0.5rem;">
+            ${time}
+          </div>
+          <div style="font-size: 0.9rem; color: #888;">
+            ${dateStr}
+          </div>
+        `;
+      });
+    }
+
+    updateClocks();
+    setInterval(updateClocks, 1000);
+  </script>
+</Layout>
