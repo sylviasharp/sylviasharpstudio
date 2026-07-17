@@ -35,7 +35,7 @@ src/
 └── workflows/
     └── deploy.yml          # Auto-deploy to GitHub Pages
 ```
-
+ 
 ## Pages
 
 - **Home** (`/`) - Welcome and services overview
